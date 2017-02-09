@@ -1,19 +1,22 @@
 import http from 'http';
 import express from 'express';
+import mongoose from 'mongoose';
 
-const app = new express();
-/*
-http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Server Ended');    
-}).listen(3005, '127.0.0.1');*/
+import todos from './controllers/todos';
 
-//console.log('Server running at http://127.0.0.1:3005/');
+const app = express();
+
+app.use('/todos', todos);
+
+mongoose.connect('mongodb://localhost/todo-api')
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err))
 
 app.listen(3005, () => {
   console.log('listening on 3005')
 })
 
+//TODO: delete this code
 app.get('/', (req, res) => {
-    res.send('Hello World2')
+    res.send('Hello World')
 })
